@@ -1,16 +1,24 @@
 const express = require('express');
 
 const router = express.Router();
+const { Form } = require('../db/Form');
 
 router.post('', (req, res) => {
     const {
         email, firstName, lastName, eventDate,
     } = req.body;
-    console.log('Email:', email);
-    console.log('First name:', firstName);
-    console.log('Last name:', lastName);
-    console.log('Event date:', eventDate);
-    res.status(200).send({ status: 'OK' });
+
+    const form = new Form({
+        email,
+        first_name: firstName,
+        last_name: lastName,
+        event_date: eventDate,
+    });
+
+    form.save()
+        .then((newForm) => res.status(200).send(newForm)).catch((err) => {
+            res.status(500).send(err); // handling errors to be added
+        });
 });
 
 module.exports = router;
