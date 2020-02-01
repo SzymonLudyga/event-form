@@ -17,7 +17,13 @@ router.post('', (req, res) => {
 
     form.save()
         .then((newForm) => res.status(200).send(newForm)).catch((err) => {
-            res.status(500).send(err); // handling errors to be added
+            if (err.name === 'ValidationError') {
+                const errorEntries = Object.entries(err.errors);
+                const errorsArray = errorEntries.map((el) => [el[0], el[1].message]);
+                res.status(400).send({ errorsArray });
+            } else {
+                res.status(500).send(err);
+            }
         });
 });
 

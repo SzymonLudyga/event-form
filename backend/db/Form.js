@@ -7,23 +7,23 @@ mongoose.connect(FORMDB_URL, { useNewUrlParser: true });
 const FormSchema = new mongoose.Schema({
     first_name: {
         type: String,
-        required: true,
+        required: [true, 'Please fill in first name.'],
         trim: true,
     },
     last_name: {
         type: String,
-        required: true,
+        required: [true, 'Please fill in last name.'],
         trim: true,
     },
     email: {
         type: String,
-        required: true,
+        required: [true, 'Please fill in email address.'],
         trim: true,
         validate: [validator.isEmail, 'Please enter valid email address.'],
     },
     event_date: {
         type: Date,
-        required: true,
+        required: [true, 'Please fill in event date.'],
     },
 });
 
