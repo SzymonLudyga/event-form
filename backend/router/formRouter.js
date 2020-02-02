@@ -16,7 +16,11 @@ router.post('', (req, res) => {
     });
 
     form.save()
-        .then((newForm) => res.status(200).send(newForm)).catch((err) => {
+        .then((newForm) => res.status(200).send({
+            details: 'New form entry created',
+            // for testing purposes
+            ...process.env.NODE_ENV && { form: newForm },
+        })).catch((err) => {
             if (err.name === 'ValidationError') {
                 const errorEntries = Object.entries(err.errors);
                 const errorsArray = errorEntries.map((el) => [el[0], el[1].message]);
@@ -25,6 +29,18 @@ router.post('', (req, res) => {
                 res.status(500).send(err);
             }
         });
+});
+
+// for testing purposes
+router.delete('', (req, res) => {
+    Form.deleteMany({})
+        .then((data) => res.status(200).send({
+            details: data.deletedCount
+                ? 'Test forms successfully deleted'
+                : 'No forms to be deleted',
+            deleted: data.deletedCount,
+        }))
+        .catch((err) => res.status(500).send(err));
 });
 
 module.exports = router;
