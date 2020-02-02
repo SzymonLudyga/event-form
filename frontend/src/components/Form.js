@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Button } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import { Button, TextField } from '@material-ui/core';
 
-
-class Form extends Component {
+export default class Form extends Component {
     onInputChange = (e) => {
+        const { changeValue } = this.props;
         const { id, value } = e.target;
-        this.props.changeValue(id, value);
+        changeValue(id, value);
     }
 
     render() {
@@ -18,43 +19,60 @@ class Form extends Component {
         } = form;
         return (
             <div className={classes.container}>
-                <div className={classes.title}>Form</div>
-                <div>First name</div>
-                <input
-                    placeholder="Enter first name"
+                <div className={classes.title}>Brainhub Form</div>
+                <TextField
+                    className={classes.input}
+                    autoFocus
+                    label="First name"
+                    placeholder="John"
                     id="firstName"
                     type="text"
                     onChange={this.onInputChange}
                     value={firstName}
                 />
-                <div>{errors.first_name}</div>
-                <div>Last name</div>
-                <input
-                    placeholder="Enter last name"
+                {errors.first_name
+                    ? <div className={classes.errorMessage}>{errors.first_name}</div>
+                    : <div className={classes.spacing} />}
+                <TextField
+                    className={classes.input}
+                    label="Last name"
+                    placeholder="Doe"
                     id="lastName"
                     type="text"
                     onChange={this.onInputChange}
                     value={lastName}
                 />
-                <div>{errors.last_name}</div>
-                <div>Email</div>
-                <input
-                    placeholder="Enter email address"
+                {errors.last_name
+                    ? <div className={classes.errorMessage}>{errors.last_name}</div>
+                    : <div className={classes.spacing} />}
+                <TextField
+                    className={classes.input}
+                    label="Email address"
+                    placeholder="johndoe@gmail.com"
                     id="email"
                     type="email"
                     onChange={this.onInputChange}
                     value={email}
                 />
-                <div>{errors.email}</div>
-                <div>Event Date</div>
-                <input
+                {errors.email
+                    ? <div className={classes.errorMessage}>{errors.email}</div>
+                    : <div className={classes.spacing} />}
+                <TextField
+                    className={classes.input}
                     id="eventDate"
+                    label="Event Date"
                     type="date"
                     onChange={this.onInputChange}
                     value={eventDate}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                 />
-                <div>{errors.event_date}</div>
+                {errors.event_date
+                    ? <div className={classes.errorMessage}>{errors.event_date}</div>
+                    : <div className={classes.spacing} />}
                 <Button
+                    className={classes.button}
                     variant="contained"
                     color="primary"
                     disabled={loading}
@@ -62,10 +80,19 @@ class Form extends Component {
                 >
                 Send
                 </Button>
-                <div>{successMessage}</div>
+                {successMessage
+                    ? <div className={classes.successMessage}>{successMessage}</div>
+                    : <div className={classes.spacing} />}
             </div>
         );
     }
 }
 
-export default Form;
+Form.propTypes = {
+    classes: PropTypes.object.isRequired,
+    form: PropTypes.object.isRequired,
+    status: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired,
+    changeValue: PropTypes.func.isRequired,
+    submitForm: PropTypes.func.isRequired,
+};
