@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import sendForm from '../api';
 import { withStyles } from '@material-ui/core/styles';
+import sendForm from '../api';
 
 const styles = () => ({
     container: {
         display: 'flex',
         flexDirection: 'column',
-        width: '50%'
+        width: '50%',
     },
     title: {
-        fontSize: '30px'
-    }
+        fontSize: '30px',
+    },
 });
 
 class Form extends Component {
@@ -22,31 +22,33 @@ class Form extends Component {
                 firstName: '',
                 lastName: '',
                 email: '',
-                eventDate: ''
-            }
-        }
+                eventDate: '',
+            },
+        };
     }
 
-    onInputChange = e => {
-        const { id, value } = e.target
+    onInputChange = (e) => {
+        const { id, value } = e.target;
         this.setState({
             inputFields: {
                 ...this.state.inputFields,
                 [id]: value,
             },
-        })
+        });
     }
 
     render() {
         const { classes } = this.props;
         const { inputFields } = this.state;
-        const { firstName, lastName, email, eventDate } = inputFields;
+        const {
+            firstName, lastName, email, eventDate,
+        } = inputFields;
         return (
             <div className={classes.container}>
                 <div className={classes.title}>Form</div>
                 <div>First name</div>
                 <input
-                    placeholder='Enter first name'
+                    placeholder="Enter first name"
                     id="firstName"
                     type="text"
                     onChange={this.onInputChange}
@@ -54,7 +56,7 @@ class Form extends Component {
                 />
                 <div>Last name</div>
                 <input
-                    placeholder='Enter last name'
+                    placeholder="Enter last name"
                     id="lastName"
                     type="text"
                     onChange={this.onInputChange}
@@ -62,7 +64,7 @@ class Form extends Component {
                 />
                 <div>Email</div>
                 <input
-                    placeholder='Enter email address'
+                    placeholder="Enter email address"
                     id="email"
                     type="email"
                     onChange={this.onInputChange}

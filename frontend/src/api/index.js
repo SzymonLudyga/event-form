@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { apiUrl } from '../consts';
+import apiUrl from '../consts';
 
 const sendForm = async (formBody) => {
     try {
@@ -7,13 +7,13 @@ const sendForm = async (formBody) => {
             method: 'post',
             url: `${apiUrl}/form`,
             data: formBody,
-            responseType: 'json'
-          });
+            responseType: 'json',
+        });
         if (res.status === 200) {
             console.log(res);
         }
     } catch (e) {
-        console.log(e)
+        console.log(e);
     }
 };
 
