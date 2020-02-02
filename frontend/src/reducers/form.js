@@ -4,14 +4,14 @@ const initialState = {
     email: '',
     firstName: '',
     lastName: '',
-    eventDate: ''
+    eventDate: '',
 };
 
-export default function repository(state = initialState, action) {
+export default function form(state = initialState, action) {
     if (action.type === CHANGE_FORM_VALUE) {
         return {
             ...state,
-            [action.input]: action.value
+            [action.input]: action.value,
         };
     }
     return state;

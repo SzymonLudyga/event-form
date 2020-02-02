@@ -1,19 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
-import sendForm from '../api';
-import { changeValue } from '../actions/form';
+import { Button } from '@material-ui/core';
 
-const styles = () => ({
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        width: '50%',
-    },
-    title: {
-        fontSize: '30px',
-    },
-});
 
 class Form extends Component {
     onInputChange = (e) => {
@@ -22,7 +9,10 @@ class Form extends Component {
     }
 
     render() {
-        const { form, classes } = this.props;
+        const {
+            form, classes, errors, submitForm, status,
+        } = this.props;
+        const { loading, successMessage } = status;
         const {
             firstName, lastName, email, eventDate,
         } = form;
@@ -37,6 +27,7 @@ class Form extends Component {
                     onChange={this.onInputChange}
                     value={firstName}
                 />
+                <div>{errors.first_name}</div>
                 <div>Last name</div>
                 <input
                     placeholder="Enter last name"
@@ -45,6 +36,7 @@ class Form extends Component {
                     onChange={this.onInputChange}
                     value={lastName}
                 />
+                <div>{errors.last_name}</div>
                 <div>Email</div>
                 <input
                     placeholder="Enter email address"
@@ -53,6 +45,7 @@ class Form extends Component {
                     onChange={this.onInputChange}
                     value={email}
                 />
+                <div>{errors.email}</div>
                 <div>Event Date</div>
                 <input
                     id="eventDate"
@@ -60,25 +53,19 @@ class Form extends Component {
                     onChange={this.onInputChange}
                     value={eventDate}
                 />
-                <button onClick={() => sendForm(form)}>SEND</button>
+                <div>{errors.event_date}</div>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    disabled={loading}
+                    onClick={submitForm}
+                >
+                Send
+                </Button>
+                <div>{successMessage}</div>
             </div>
         );
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        form: state.form
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        changeValue: (id, value) => dispatch(changeValue(id, value))
-    };
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withStyles(styles)(Form));
+export default Form;
