@@ -8,7 +8,9 @@ mongoose.connect(dbUrl, { useNewUrlParser: true });
 
 const errors = {
     noFirstName: 'Please fill in first name.',
+    invalidFirstName: 'First name should contain only letters.',
     noLastName: 'Please fill in last name.',
+    invalidLastName: 'Last name should contain only letters.',
     noEmail: 'Please fill in email address.',
     invalidEmail: 'Please enter valid email address.',
     noEventDate: 'Please fill in event date.',
@@ -19,11 +21,13 @@ const FormSchema = new mongoose.Schema({
         type: String,
         required: [true, errors.noFirstName],
         trim: true,
+        match: [/^[a-zA-Z]+$/, errors.invalidFirstName],
     },
     last_name: {
         type: String,
         required: [true, errors.noLastName],
         trim: true,
+        match: [/^[a-zA-Z]+$/, errors.invalidLastName],
     },
     email: {
         type: String,

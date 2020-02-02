@@ -17,7 +17,7 @@ router.post('', (req, res) => {
 
     form.save()
         .then((newForm) => res.status(200).send({
-            details: 'New form entry created',
+            details: 'New event form entry added.',
             // for testing purposes
             ...process.env.NODE_ENV && { form: newForm },
         })).catch((err) => {
