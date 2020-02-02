@@ -1,12 +1,12 @@
 import React from 'react';
 import Form from './components/Form';
+import { Provider } from 'react-redux';
+import store from './store';
 
-function App() {
+export default function App() {
     return (
-        <div>
+        <Provider store={store}>
             <Form />
-        </div>
+        </Provider>
     );
 }
-
-export default App;

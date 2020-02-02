@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import sendForm from '../api';
+import { changeValue } from '../actions/form';
 
 const styles = () => ({
     container: {
@@ -14,35 +16,16 @@ const styles = () => ({
 });
 
 class Form extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            inputFields: {
-                firstName: '',
-                lastName: '',
-                email: '',
-                eventDate: '',
-            },
-        };
-    }
-
     onInputChange = (e) => {
         const { id, value } = e.target;
-        this.setState({
-            inputFields: {
-                ...this.state.inputFields,
-                [id]: value,
-            },
-        });
+        this.props.changeValue(id, value);
     }
 
     render() {
-        const { classes } = this.props;
-        const { inputFields } = this.state;
+        const { form, classes } = this.props;
         const {
             firstName, lastName, email, eventDate,
-        } = inputFields;
+        } = form;
         return (
             <div className={classes.container}>
                 <div className={classes.title}>Form</div>
@@ -77,10 +60,25 @@ class Form extends Component {
                     onChange={this.onInputChange}
                     value={eventDate}
                 />
-                <button onClick={() => sendForm(inputFields)}>SEND</button>
+                <button onClick={() => sendForm(form)}>SEND</button>
             </div>
         );
     }
 }
 
-export default withStyles(styles)(Form);
+function mapStateToProps(state) {
+    return {
+        form: state.form
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        changeValue: (id, value) => dispatch(changeValue(id, value))
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withStyles(styles)(Form));
