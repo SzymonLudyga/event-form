@@ -5,6 +5,7 @@ const initialState = {
     first_name: '',
     last_name: '',
     event_date: '',
+    unknown_error: '',
 };
 
 export default function errors(state = initialState, action) {

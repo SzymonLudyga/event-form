@@ -20,6 +20,9 @@ export default class Form extends Component {
         return (
             <div className={classes.container}>
                 <div className={classes.title}>Brainhub Form</div>
+                {errors.unknown_error
+                    ? <div className={classes.errorMessage}>{errors.unknown_error}</div>
+                    : <div className={classes.spacing} />}
                 <TextField
                     className={classes.input}
                     autoFocus

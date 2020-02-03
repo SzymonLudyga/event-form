@@ -29,10 +29,14 @@ export const submitForm = () => async (dispatch, getState) => {
         }
     } catch (e) {
         dispatch(clearErrors());
-        e.response.data.errorsArray.forEach((error) => {
-            const [errorType, errorMessage] = error;
-            dispatch(handleError(errorType, errorMessage));
-        });
+        if (e.response.status === 400) {
+            e.response.data.errorsArray.forEach((error) => {
+                const [errorType, errorMessage] = error;
+                dispatch(handleError(errorType, errorMessage));
+            });
+        } else {
+            dispatch(handleError('unknown_error', 'Unknown error.'));
+        }
         dispatch(loading(false));
     }
 };
