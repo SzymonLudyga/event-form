@@ -34,7 +34,7 @@ export default class Form extends Component {
                     value={firstName}
                 />
                 {errors.first_name
-                    ? <div className={classes.errorMessage}>{errors.first_name}</div>
+                    ? <div className={classes.errorMessage} role="first-name-error">{errors.first_name}</div>
                     : <div className={classes.spacing} />}
                 <TextField
                     className={classes.input}
@@ -46,7 +46,7 @@ export default class Form extends Component {
                     value={lastName}
                 />
                 {errors.last_name
-                    ? <div className={classes.errorMessage}>{errors.last_name}</div>
+                    ? <div className={classes.errorMessage} role="last-name-error">{errors.last_name}</div>
                     : <div className={classes.spacing} />}
                 <TextField
                     className={classes.input}
@@ -58,7 +58,7 @@ export default class Form extends Component {
                     value={email}
                 />
                 {errors.email
-                    ? <div className={classes.errorMessage}>{errors.email}</div>
+                    ? <div className={classes.errorMessage} role="email-error">{errors.email}</div>
                     : <div className={classes.spacing} />}
                 <TextField
                     className={classes.input}
@@ -72,7 +72,7 @@ export default class Form extends Component {
                     }}
                 />
                 {errors.event_date
-                    ? <div className={classes.errorMessage}>{errors.event_date}</div>
+                    ? <div className={classes.errorMessage} role="event-date-error">{errors.event_date}</div>
                     : <div className={classes.spacing} />}
                 <Button
                     className={classes.button}
